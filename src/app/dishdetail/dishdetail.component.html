@@ -13,7 +13,7 @@
           <h3 *ngIf="dish">{{dish.name | uppercase}}</h3>
         </mat-card-title>
       </mat-card-header>
-      <img mat-card-image src={{dish.image}} alt="{{}dish.name}">
+      <img mat-card-image src={{dish.image}} alt="{{dish.name}}">
       <mat-card-content>
         <p>{{dish.description}}</p>
       </mat-card-content>
@@ -32,7 +32,7 @@
     </mat-card>
   </div>
 
-  <div fxFlex="40">
+  <div fxFlex="60">
     <mat-card>
       <mat-card-header>
         <mat-card-title>
@@ -46,7 +46,40 @@
             <p matLine> {{comment.rating}} Stars </p>
             <p matLine> -- {{comment.author}} {{comment.date | date}}</p>
           </mat-list-item>
+          <mat-list-item *ngIf="this.commentForm.valid">
+            <p matLine>{{commentForm.value.comment}}</p>
+            <p matLine>{{commentForm.value.rating}} Stars</p>
+            <p matLine>--{{commentForm.value.author}}</p>
+          </mat-list-item>
+
         </mat-list>
+
+        <div class="form-size">
+          <form novalidate [formGroup]="commentForm" #cform="ngForm" (ngSubmit)="onSubmit()">
+            <p>
+              <mat-form-field class="full-width">
+                <input matInput formControlName="author" placeholder="Name" type="text" required>
+                <mat-error *ngIf="formErrors.author">
+                  {{ formErrors.author }}
+                </mat-error>
+              </mat-form-field>
+            </p>
+            <p>
+              <mat-slider min="1" max="5" step="1" tickInterval="1" thumbLabel   formControlName="rating"></mat-slider>
+            </p>
+            <p>
+              <mat-form-field class="full-width">
+                <textarea matInput formControlName="comment" placeholder="Your comment" rows="5" required>
+                </textarea>
+                <mat-error *ngIf="formErrors.comment">
+                  {{ formErrors.comment }}
+                </mat-error>
+              </mat-form-field>
+            </p>
+            <button type="submit" mat-button class="background-primary text-floral-white"
+              [disabled]="commentForm.invalid">Submit</button>
+          </form>
+        </div>
       </mat-card-content>
     </mat-card>
   </div>
