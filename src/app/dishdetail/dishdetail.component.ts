@@ -61,7 +61,7 @@ export class DishdetailComponent implements OnInit {
     },
     'comment': {
       'required':      'Comment is required.',
-      'minlength':     'Comment must be at least 5 characters long.',
+      'minlength':     'Comment must be at least 5 characters long.'
     },
   };
 
@@ -69,7 +69,7 @@ export class DishdetailComponent implements OnInit {
     this.commentForm = this.fb.group({
       author: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)] ],
       rating: 5,
-      comment: [Validators.required, Validators.minLength(5)]
+      comment: ['', [Validators.required, Validators.minLength(5)]]
     });
 
     this.commentForm.valueChanges
