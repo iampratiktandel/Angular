@@ -40,6 +40,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from "@angular/http";
 
 import { baseURL } from "./shared/baseurl";
+import { HighlightDirective } from './directives/highlight.directive';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { baseURL } from "./shared/baseurl";
     AboutComponent,
     HomeComponent,
     ContactComponent,
-    LoginComponent
+    LoginComponent,
+    HighlightDirective
   ],
   imports: [
     BrowserModule,
