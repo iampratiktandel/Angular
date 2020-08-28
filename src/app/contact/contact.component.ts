@@ -52,11 +52,15 @@ export class ContactComponent implements OnInit {
       'email':         'Email not in valid format.'
     },
   };
-  
+  isLoading: boolean;
+  isShowingResponse: boolean;
+
   constructor(private fb: FormBuilder,
     private feedbackService: FeedbackService,
     @Inject('BaseURL') private BaseURL) { 
     this.createForm();
+    this.isLoading = false;
+    this.isShowingResponse = false;
   }
 
   ngOnInit() {
@@ -100,13 +104,21 @@ export class ContactComponent implements OnInit {
   }
 
   onSubmit() {
+    this.isLoading = true;
     this.feedback = this.feedbackForm.value;
     console.log(this.feedback);
     this.feedbackService.submitFeedback(this.feedback)
       .subscribe(feedback => { 
         this.feedback = feedback;
       } ,
-      errmess => { this.feedback = null; this.feedbackcopy = null; this.errMess = <any>errmess; });
+      errmess => { this.feedback = null; this.feedbackcopy = null; this.errMess = <any>errmess; },
+      () => {
+        this.isShowingResponse = true;
+        setTimeout(() => {
+          this.isShowingResponse = false;
+          this.isLoading = false;
+        }, 5000);
+      });
     this.feedbackForm.reset({
       firstname: '',
       lastname: '',
